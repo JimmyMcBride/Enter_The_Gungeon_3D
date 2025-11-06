@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://b6htqrdlq6s5x"]
+
+[ext_resource type="Script" uid="uid://bqawuyebbgktn" path="res://Game/Scenes/Modules/Player/Player.cs" id="1_45knn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a84mo"]
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.348502, 0.548221, 0.886365, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0kast"]
+material = SubResource("StandardMaterial3D_a84mo")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_45knn"]
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.662611, 0.423174, 0.203341, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0e3s2"]
+material = SubResource("StandardMaterial3D_45knn")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xtboy"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_45knn")
+
+[node name="BodyMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_0kast")
+skeleton = NodePath("../..")
+
+[node name="EyeMesh" type="MeshInstance3D" parent="BodyMesh"]
+transform = Transform3D(-2.00523e-08, -0.458743, 0, 0.458743, -2.00523e-08, 0, 0, 0, 0.872386, 0, 0.347553, -0.14364)
+mesh = SubResource("CapsuleMesh_0e3s2")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_xtboy")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 1.5, 0)
+spring_length = 10.0
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
