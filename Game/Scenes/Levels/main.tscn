@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bxijafsfost35"]
+[gd_scene load_steps=9 format=3 uid="uid://bxijafsfost35"]
 
 [ext_resource type="PackedScene" uid="uid://b6htqrdlq6s5x" path="res://Game/Scenes/Modules/Player/player.tscn" id="1_a84mo"]
 [ext_resource type="Texture2D" uid="uid://7ru3887x56ky" path="res://Assets/Proto/texture_01.png" id="2_0kast"]
+[ext_resource type="Texture2D" uid="uid://cwsjycgvr7ud8" path="res://Assets/Proto/texture_11.png" id="3_33eb2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xtboy"]
 sky_top_color = Color(0.384154, 0.592321, 0.793601, 1)
@@ -24,6 +25,10 @@ specular_mode = 1
 albedo_texture = ExtResource("2_0kast")
 uv1_triplanar = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ltxp"]
+albedo_texture = ExtResource("3_33eb2")
+uv1_triplanar = true
+
 [node name="Main" type="Node3D"]
 
 [node name="Environment" type="Node3D" parent="."]
@@ -38,8 +43,41 @@ environment = SubResource("Environment_0kast")
 
 [node name="Player" parent="." instance=ExtResource("1_a84mo")]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
+[node name="Level" type="Node3D" parent="."]
+
+[node name="Floor" type="CSGBox3D" parent="Level"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
 size = Vector3(100, 1, 100)
 material = SubResource("StandardMaterial3D_xtboy")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Level/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.43276, -0.928528, -29.8403)
+operation = 2
+use_collision = true
+size = Vector3(38, 6.14294, 7)
+material = SubResource("StandardMaterial3D_0ltxp")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5466, -1.42853, -3.96922)
+use_collision = true
+size = Vector3(15, 6.14294, 1)
+material = SubResource("StandardMaterial3D_0ltxp")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.75, -1.42853, -17.8499)
+use_collision = true
+size = Vector3(9.37659, 6.14294, 1)
+material = SubResource("StandardMaterial3D_0ltxp")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Level"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -26.9479, -1.42853, 11.6446)
+use_collision = true
+size = Vector3(23, 6.14294, 1)
+material = SubResource("StandardMaterial3D_0ltxp")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Level"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.9328, -1.42853, -22.8403)
+use_collision = true
+size = Vector3(21, 6.14294, 1)
+material = SubResource("StandardMaterial3D_0ltxp")

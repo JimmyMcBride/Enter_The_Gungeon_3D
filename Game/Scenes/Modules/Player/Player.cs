@@ -8,6 +8,10 @@ public partial class Player : CharacterBody3D
     private const float DashSpeed = 30f;
     private const float DashDuration = 0.3f;
 
+    // Smooth movement tuning
+    private const float Acceleration = 40f; // units per second change toward target when moving
+    private const float Deceleration = 35f; // units per second change toward target when stopping
+
     private MeshInstance3D _bodyMesh;
     private SpringArm3D _springArm; // reference to camera arm
     private uint _springArmSavedMask; // saved collision mask to restore after dash
@@ -73,16 +77,11 @@ public partial class Player : CharacterBody3D
         if (!IsOnFloor())
             velocity += GetGravity() * (float)delta;
 
-        if (moveDir != Vector3.Zero)
-        {
-            velocity.X = moveDir.X * WalkSpeed;
-            velocity.Z = moveDir.Z * WalkSpeed;
-        }
-        else
-        {
-            velocity.X = Mathf.MoveToward(Velocity.X, 0, WalkSpeed);
-            velocity.Z = Mathf.MoveToward(Velocity.Z, 0, WalkSpeed);
-        }
+        // Smooth acceleration and deceleration on the horizontal plane.
+        var desiredHorizontal = moveDir != Vector3.Zero ? moveDir * WalkSpeed : Vector3.Zero;
+        var rate = moveDir != Vector3.Zero ? Acceleration : Deceleration;
+        velocity.X = Mathf.MoveToward(velocity.X, desiredHorizontal.X, rate * (float)delta);
+        velocity.Z = Mathf.MoveToward(velocity.Z, desiredHorizontal.Z, rate * (float)delta);
 
         Velocity = velocity;
         MoveAndSlide();
